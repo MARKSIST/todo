@@ -4,16 +4,16 @@ const listCreateDtoInType = shape({
 })
 
 const listGetDtoInType = shape({
-  id: id().isRequired()
+  listId: id().isRequired()
 })
 
 const listUpdateDtoInType = shape({
-  id: id().isRequired(),
+  listId: id().isRequired(),
   name: string(1,30)
 })
 
 const listDeleteDtoInType = shape({
-  id: id().isRequired(),
+  listId: id().isRequired(),
   forceDelete: boolean()
 });
 

@@ -5,7 +5,7 @@ const itemCreateDtoInType = shape({
   })
 
 const itemGetDtoInType = shape({
-  itemId: id().isRequired()
+  id: id().isRequired()
 })
 
 const itemListDtoInType = shape({
@@ -15,4 +15,19 @@ const itemListDtoInType = shape({
     pageIndex: integer(),
     pageSize: integer()
   })
+})
+
+const itemDeleteDtoInType = shape({
+  id: id().isRequired()
+})
+
+const itemCompleteDtoInType = shape({
+  itemId: id().isRequired(),
+  completed: boolean()
+})
+
+const itemUpdateDtoInType = shape({
+  itemId: id().isRequired(),
+  listId: id(),
+  text: string(1,1000)
 })

@@ -6,8 +6,8 @@ class ListMongo extends UuObjectDao {
     await super.createIndex({ awid: 1, _id: 1 }, { unique: true });
   }
 
-  async create(list) {
-    return await super.insertOne(list);
+  async create({awid, name}) {
+    return await super.insertOne({awid, name});
   }
 
   async get( {awid, id} ) {

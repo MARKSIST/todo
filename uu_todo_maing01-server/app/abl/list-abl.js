@@ -46,11 +46,8 @@ class ListAbl {
        Errors.List.InvalidDtoIn,
        Errors.List.ListDaoListFailed
      );
-
-     let dtoOut = await this.dao.list({ awid });
-     dtoOut.uuAppErrorMap = uuAppErrorMap;
- 
-     return dtoOut;
+      let dtoOut = await this.dao.list({ awid });
+     return {dtoOut, uuAppErrorMap};
   }
 
   async delete(awid, dtoIn) {
@@ -63,12 +60,19 @@ class ListAbl {
       validationResult,
       WARNINGS.deleteUnsupportedKeys.code,
       Errors.Delete.InvalidDtoIn,
-      Errors.Delete.ListDaoGetFailed
+      Errors.Delete.ListDaoDeleteFailed
     );
 
-    await this.dao.delete({ awid, id: dtoIn.id });
-      
-    return uuAppErrorMap
+    try {
+      await this.dao.delete({ awid, listId: dtoIn.listId });
+    } catch (e) {
+      if (e instanceof ObjectStoreError) {
+        // A3
+        throw new Errors.Delete.ListDaoDeleteFailed({ uuAppErrorMap }, e);
+      }
+      throw e;
+    }
+    return {uuAppErrorMap}
   }
 
   async update(awid, dtoIn) {
@@ -84,10 +88,9 @@ class ListAbl {
       Errors.Update.ListDaoUpdateFailed
     );
 
-    let uuObject = await this.dao.get(awid, dtoIn.id);
-
+    let uuObject = await this.dao.get(awid, dtoIn.listId);
     if (!uuObject) {
-      throw new Error(`List with ${dtoIn.id} not found`);
+      throw new Error(`List with ${dtoIn.listId} not found`);
     }
 
     uuObject = {
@@ -96,10 +99,19 @@ class ListAbl {
 
     delete uuObject.id;
 
-    let dtoOut = await this.dao.update({ awid, id: dtoIn.id }, uuObject);
-    dtoOut.uuAppErrorMap = uuAppErrorMap; 
-
-    return dtoOut;
+    let dtoOut;
+    
+    try {
+      dtoOut = await this.dao.update({ awid, listId: dtoIn.listId }, uuObject);
+    } catch (e) {
+      if (e instanceof ObjectStoreError) {
+        // A3
+        throw new Errors.Update.ListDaoUpdateFailed({ uuAppErrorMap }, e);
+      }
+      throw e;
+    }
+    
+    return {dtoOut, uuAppErrorMap};
   }
 
   async get(awid, dtoIn) {
@@ -115,10 +127,19 @@ class ListAbl {
       Errors.Get.ListDaoGetFailed
     );
 
-    let dtoOut = await this.dao.get({ awid, id: dtoIn.id });
-    dtoOut.uuAppErrorMap = uuAppErrorMap;
+    let dtoOut;
 
-    return dtoOut;
+    try {
+      dtoOut = await this.dao.get({ awid, listId: dtoIn.listId });
+    } catch (e) {
+      if (e instanceof ObjectStoreError) {
+        // A3
+        throw new Errors.Get.listDoesNotExist({ uuAppErrorMap }, e);
+      }
+      throw e;
+    }
+  
+    return {dtoOut, uuAppErrorMap};
   }
 
   async create(awid, dtoIn) {
@@ -134,10 +155,9 @@ class ListAbl {
     );
 
     // hds 2
-    dtoIn.awid = awid;
-    let dtoOut;
+    let dtoOut
     try {
-      dtoOut = await this.dao.create(dtoIn);
+      dtoOut = await this.dao.create({awid, name: dtoIn.name});
     } catch (e) {
       if (e instanceof ObjectStoreError) {
         // A3
@@ -145,10 +165,8 @@ class ListAbl {
       }
       throw e;
     }
-
     // hds 3
-    dtoOut.uuAppErrorMap = uuAppErrorMap;
-    return dtoOut;
+    return {dtoOut, uuAppErrorMap};
   }
 }
 
