@@ -4,14 +4,14 @@ import { createVisualComponent } from "uu5g04-hooks";
 import Config from "./config/config";
 //@@viewOff:imports
 
-const Joke = createVisualComponent({
+const Todo = createVisualComponent({
   //@@viewOn:statics
-  displayName: Config.TAG + "Joke",
+  displayName: Config.TAG + "Todo",
   //@@viewOff:statics
 
   //@@viewOn:propTypes
   propTypes: {
-    joke: UU5.PropTypes.shape({
+    todo: UU5.PropTypes.shape({
       name: UU5.PropTypes.string.isRequired,
       text: UU5.PropTypes.string.isRequired,
       averageRating: UU5.PropTypes.number.isRequired
@@ -25,7 +25,7 @@ const Joke = createVisualComponent({
 
   //@@viewOn:defaultProps
   defaultProps: {
-    joke: null,
+    todo: null,
     colorSchema: "blue",
     onDetail: () => {},
     onUpdate: () => {},
@@ -33,37 +33,37 @@ const Joke = createVisualComponent({
   },
   //@@viewOff:defaultProps
 
-  render({ joke, colorSchema, onDelete }) {
+  render({ todo, colorSchema, onDelete }) {
     //@@viewOn:private
     function handleDelete() {
-      onDelete(joke);
-    }
-    //@@viewOff:private
-
-    //@@viewOn:render
-    function renderHeader() {
+        onDelete(todo);
+      }
+      //@@viewOff:private
+  
+      //@@viewOn:render
+      function renderHeader() {
+        return (
+          <>
+            {todo.name}
+            <UU5.Bricks.Button onClick={handleDelete} colorSchema="red">
+              <UU5.Bricks.Icon icon="mdi-delete" />
+            </UU5.Bricks.Button>
+          </>
+        );
+      }
+  
+      if (!todo) {
+        return null;
+      }
+  
       return (
-        <>
-          {joke.name}
-          <UU5.Bricks.Button onClick={handleDelete} colorSchema="red">
-            <UU5.Bricks.Icon icon="mdi-delete" />
-          </UU5.Bricks.Button>
-        </>
+        <UU5.Bricks.Card header={renderHeader()} colorSchema={colorSchema}>
+          <div>{todo.text}</div>
+          <UU5.Bricks.Rating value={todo.averageRating} />
+        </UU5.Bricks.Card>
       );
+      //@@viewOff:render
     }
-
-    if (!joke) {
-      return null;
-    }
-
-    return (
-      <UU5.Bricks.Card header={renderHeader()} colorSchema={colorSchema}>
-        <div>{joke.text}</div>
-        <UU5.Bricks.Rating value={joke.averageRating} />
-      </UU5.Bricks.Card>
-    );
-    //@@viewOff:render
-  }
 });
 
-export default Joke;
+export default Todo;

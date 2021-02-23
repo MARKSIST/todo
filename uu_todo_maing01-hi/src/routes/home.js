@@ -11,7 +11,9 @@ import "uu5g04-bricks";
 import { createVisualComponent } from "uu5g04-hooks";
 import "uu_plus4u5g01-bricks";
 
-import Joke from "../bricks/joke"; // Add this line
+import TodoList from "../bricks/todo-list";
+import TodoProvider from "../bricks/todo-provider";
+
 //@@viewOff:imports
 
 const STATICS = {
@@ -52,13 +54,15 @@ export const Home = createVisualComponent({
     //@@viewOn:render
     return (
       <div>
-        <Joke />
-        <Joke />
-        <Joke />
+        <TodoProvider>
+          {({ todos, handleDelete }) => {
+            return <TodoList todos={todos} onDelete={handleDelete} />;
+          }}
+        </TodoProvider>
       </div>
     );
     //@@viewOff:render
-  },
+  }
   // render(props) {
   //   //@@viewOn:private
   //   //@@viewOff:private

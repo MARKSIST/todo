@@ -4,63 +4,63 @@ import { createComponent } from "uu5g04-hooks";
 import Config from "./config/config";
 //@@viewOff:imports
 
-let jokes = [
+let todos = [
   {
     id: 1,
-    name: "Joke 1",
-    text: "This is my joke 1...",
+    name: "Todo 1",
+    text: "This is my todo 1...",
     averageRating: 5.0
   },
   {
     id: 2,
-    name: "Joke 2",
-    text: "This is my joke 2...",
+    name: "Todo 2",
+    text: "This is my todo 2...",
     averageRating: 4.0
   },
   {
     id: 3,
-    name: "Joke 3",
-    text: "This is my joke 3...",
+    name: "Todo 3",
+    text: "This is my todo 3...",
     averageRating: 3.0
   },
   {
     id: 4,
-    name: "Joke 4",
-    text: "This is my joke 4...",
+    name: "Todo 4",
+    text: "This is my todo 4...",
     averageRating: 2.0
   },
   {
     id: 5,
-    name: "Joke 5",
-    text: "This is my joke 5...",
+    name: "Todo 5",
+    text: "This is my todo 5...",
     averageRating: 1.0
   }
 ];
 
-const JokeProvider = createComponent({
+const TodoProvider = createComponent({
   //@@viewOn:statics
-  displayName: Config.TAG + "JokeProvider",
+  displayName: Config.TAG + "TodoProvider",
   //@@viewOff:statics
 
   render({ children }) {
     //@@viewOn:private
-    function handleDelete(joke) {
-      jokes = jokes.filter(item => item.id !== joke.id);
+    function handleDelete(todo) {
+      todos = todos.filter(item => item.id !== todo.id);
 
       UU5.Environment.getPage()
         .getAlertBus()
         .addAlert({
           content: `
-        Joke with name ${joke.name} was deleted from array jokes.
+        Todo with name ${todo.name} was deleted from array todos.
         The change is not visible because you need to learn about state first ;-)`
         });
     }
     //@@viewOff:private
 
     //@@viewOn:render
-    return children({ jokes, handleDelete });
+    return children({ todos, handleDelete });
     //@@viewOff:render
   }
 });
 
-export default JokeProvider;
+export default TodoProvider;
