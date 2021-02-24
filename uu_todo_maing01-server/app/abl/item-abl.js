@@ -29,11 +29,9 @@ const WARNINGS = {
   updateUnsupportedKeys: {
     code: `${Errors.Update.UC_CODE}unsupportedKeys`,
   },
-
 };
 
 class ItemAbl {
-
   constructor() {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao("item");
@@ -49,10 +47,10 @@ class ItemAbl {
       validationResult,
       WARNINGS.listUnsupportedKeys.code,
       Errors.List.InvalidDtoIn
-      );
+    );
 
-      let dtoOut = await this.dao.list({awid})
-      return {dtoOut, uuAppErrorMap}
+    let dtoOut = await this.dao.list({ awid });
+    return { dtoOut, uuAppErrorMap };
   }
 
   async delete(awid, dtoIn) {
@@ -64,13 +62,13 @@ class ItemAbl {
       validationResult,
       WARNINGS.deleteUnsupportedKeys.code,
       Errors.Delete.InvalidDtoIn
-      );
-      let item = await this.dao.get({awid, id: dtoIn.id})
-      if(item.itemList.length === 0 ){
-        throw new Errors.Delete.ItemDaoDeleteFailed({uuAppErrorMap}, {id:dtoIn.id})
-      }
-      await this.dao.delete({awid, id: dtoIn.id})
-      return {uuAppErrorMap}
+    );
+    let item = await this.dao.get({ awid, id: dtoIn.id });
+    if (item.itemList.length === 0) {
+      throw new Errors.Delete.ItemDaoDeleteFailed({ uuAppErrorMap }, { id: dtoIn.id });
+    }
+    await this.dao.delete({ awid, id: dtoIn.id });
+    return { uuAppErrorMap };
   }
 
   async complete(awid, dtoIn) {
@@ -81,14 +79,14 @@ class ItemAbl {
       validationResult,
       WARNINGS.completeUnsupportedKeys.code,
       Errors.Complete.InvalidDtoIn
-      );
-      let uuObject = await this.dao.get({awid, id: dtoIn.itemId})
-      uuObject = {
-        ...dtoIn
-      }
-      delete uuObject.itemId
-      let dtoOut = await this.dao.complete({awid, id: dtoIn.itemId}, uuObject, "NONE")
-      return {dtoOut, uuAppErrorMap}
+    );
+    let uuObject = await this.dao.get({ awid, id: dtoIn.itemId });
+    uuObject = {
+      ...dtoIn,
+    };
+    delete uuObject.itemId;
+    let dtoOut = await this.dao.complete({ awid, id: dtoIn.itemId }, uuObject, "NONE");
+    return { dtoOut, uuAppErrorMap };
   }
 
   async update(awid, dtoIn) {
@@ -99,16 +97,16 @@ class ItemAbl {
       validationResult,
       WARNINGS.updateUnsupportedKeys.code,
       Errors.Update.InvalidDtoIn
-      );
-      let uuObject = await this.dao.get({awid, id: dtoIn.itemId})
+    );
+    let uuObject = await this.dao.get({ awid, id: dtoIn.itemId });
 
-      uuObject = {
-        ...dtoIn
-      }
+    uuObject = {
+      ...dtoIn,
+    };
 
-      delete uuObject.itemId
-      let dtoOut = await this.dao.update({awid, id: dtoIn.itemId}, uuObject, "NONE")
-      return {dtoOut, uuAppErrorMap}
+    delete uuObject.itemId;
+    let dtoOut = await this.dao.update({ awid, id: dtoIn.itemId }, uuObject, "NONE");
+    return { dtoOut, uuAppErrorMap };
   }
 
   async get(awid, dtoIn) {
@@ -123,8 +121,8 @@ class ItemAbl {
       Errors.Get.InvalidDtoIn,
       Errors.Get.ItemDaoGetFailed
     );
-    let dtoOut = this.dao.get({awid, id: dtoIn.id})
-    return {dtoOut, uuAppErrorMap}
+    let dtoOut = this.dao.get({ awid, id: dtoIn.id });
+    return { dtoOut, uuAppErrorMap };
   }
 
   async create(awid, dtoIn) {
@@ -137,19 +135,17 @@ class ItemAbl {
       validationResult,
       WARNINGS.createUnsupportedKeys.code,
       Errors.Create.InvalidDtoIn
-      );
+    );
 
-      dtoIn.completed = false;
-      dtoIn.awid = awid;
-      let dtoOut;
-      dtoOut = await this.dao.create(dtoIn);
+    dtoIn.completed = false;
+    dtoIn.awid = awid;
+    let dtoOut;
+    dtoOut = await this.dao.create(dtoIn);
 
-      // hds 3
-      
-      return {dtoOut, uuAppErrorMap};
+    // hds 3
 
+    return { dtoOut, uuAppErrorMap };
   }
-
 }
 
 module.exports = new ItemAbl();

@@ -5,7 +5,7 @@ const LIST_ERROR_PREFIX = `${TodoMainUseCaseError.ERROR_PREFIX}list/`;
 
 const Create = {
   UC_CODE: `${LIST_ERROR_PREFIX}create/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -25,7 +25,7 @@ const Create = {
 
 const Get = {
   UC_CODE: `${LIST_ERROR_PREFIX}get/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -61,12 +61,11 @@ const Update = {
       this.message = "Update list by list DAO update failed.";
     }
   },
-  
 };
 
 const Delete = {
   UC_CODE: `${LIST_ERROR_PREFIX}delete/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -102,7 +101,7 @@ const Delete = {
 
 const List = {
   UC_CODE: `${LIST_ERROR_PREFIX}list/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -117,5 +116,5 @@ module.exports = {
   Delete,
   Update,
   Get,
-  Create
+  Create,
 };

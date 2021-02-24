@@ -25,7 +25,6 @@ const WARNINGS = {
   listUnsupportedKeys: {
     code: `${Errors.List.UC_CODE}unsupportedKeys`,
   },
-
 };
 
 class ListAbl {
@@ -35,19 +34,19 @@ class ListAbl {
   }
 
   async list(awid, dtoIn) {
-     // HDS 1.1
-     let validationResult = this.validator.validate("listListDtoInType", dtoIn);
+    // HDS 1.1
+    let validationResult = this.validator.validate("listListDtoInType", dtoIn);
 
-     // HDS 1.2, 1.3 // A1, A2
-     let uuAppErrorMap = ValidationHelper.processValidationResult(
-       dtoIn,
-       validationResult,
-       WARNINGS.listUnsupportedKeys.code,
-       Errors.List.InvalidDtoIn,
-       Errors.List.ListDaoListFailed
-     );
-      let dtoOut = await this.dao.list({ awid });
-     return {dtoOut, uuAppErrorMap};
+    // HDS 1.2, 1.3 // A1, A2
+    let uuAppErrorMap = ValidationHelper.processValidationResult(
+      dtoIn,
+      validationResult,
+      WARNINGS.listUnsupportedKeys.code,
+      Errors.List.InvalidDtoIn,
+      Errors.List.ListDaoListFailed
+    );
+    let dtoOut = await this.dao.list({ awid });
+    return { dtoOut, uuAppErrorMap };
   }
 
   async delete(awid, dtoIn) {
@@ -70,9 +69,10 @@ class ListAbl {
         // A3
         throw new Errors.Delete.ListDaoDeleteFailed({ uuAppErrorMap }, e);
       }
+
       throw e;
     }
-    return {uuAppErrorMap}
+    return { uuAppErrorMap };
   }
 
   async update(awid, dtoIn) {
@@ -94,13 +94,13 @@ class ListAbl {
     }
 
     uuObject = {
-      ...dtoIn
-    }
+      ...dtoIn,
+    };
 
     delete uuObject.id;
 
     let dtoOut;
-    
+
     try {
       dtoOut = await this.dao.update({ awid, listId: dtoIn.listId }, uuObject);
     } catch (e) {
@@ -110,8 +110,8 @@ class ListAbl {
       }
       throw e;
     }
-    
-    return {dtoOut, uuAppErrorMap};
+
+    return { dtoOut, uuAppErrorMap };
   }
 
   async get(awid, dtoIn) {
@@ -138,8 +138,8 @@ class ListAbl {
       }
       throw e;
     }
-  
-    return {dtoOut, uuAppErrorMap};
+
+    return { dtoOut, uuAppErrorMap };
   }
 
   async create(awid, dtoIn) {
@@ -155,9 +155,9 @@ class ListAbl {
     );
 
     // hds 2
-    let dtoOut
+    let dtoOut;
     try {
-      dtoOut = await this.dao.create({awid, name: dtoIn.name});
+      dtoOut = await this.dao.create({ awid, name: dtoIn.name });
     } catch (e) {
       if (e instanceof ObjectStoreError) {
         // A3
@@ -166,7 +166,7 @@ class ListAbl {
       throw e;
     }
     // hds 3
-    return {dtoOut, uuAppErrorMap};
+    return { dtoOut, uuAppErrorMap };
   }
 }
 

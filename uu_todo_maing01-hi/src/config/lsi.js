@@ -34,7 +34,7 @@ const Lsi = {
     termsOfUse: {
       cs: "Podmínky užívání",
       en: "Terms of use",
-    }
+    },
   },
 
   notAuth: {

@@ -62,7 +62,7 @@ export const Home = createVisualComponent({
       </div>
     );
     //@@viewOff:render
-  }
+  },
   // render(props) {
   //   //@@viewOn:private
   //   //@@viewOff:private

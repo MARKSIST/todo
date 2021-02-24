@@ -15,7 +15,7 @@ const TodoList = createVisualComponent({
     todos: UU5.PropTypes.array.isRequired,
     onDetail: UU5.PropTypes.func,
     onUpdate: UU5.PropTypes.func,
-    onDelete: UU5.PropTypes.func
+    onDelete: UU5.PropTypes.func,
   },
   //@@viewOff:propTypes
 
@@ -24,7 +24,7 @@ const TodoList = createVisualComponent({
     todos: [],
     onDetail: () => {},
     onUpdate: () => {},
-    onDelete: () => {}
+    onDelete: () => {},
   },
   //@@viewOff:defaultProps
 
@@ -36,7 +36,7 @@ const TodoList = createVisualComponent({
 
     return (
       <div>
-        {todos.map(todo => (
+        {todos.map((todo) => (
           <Todo
             key={todo.id}
             todo={todo}
@@ -49,7 +49,7 @@ const TodoList = createVisualComponent({
       </div>
     );
     //@@viewOff:render
-  }
+  },
 });
 
 export default TodoList;

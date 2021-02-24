@@ -5,7 +5,7 @@ const ITEM_ERROR_PREFIX = `${TodoMainUseCaseError.ERROR_PREFIX}item/`;
 
 const Create = {
   UC_CODE: `${ITEM_ERROR_PREFIX}create/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -49,7 +49,6 @@ const Get = {
       this.message = "Item with given id does not exist.";
     }
   },
-
 };
 
 const Update = {
@@ -70,12 +69,11 @@ const Update = {
       this.message = "Update item by item DAO update failed";
     }
   },
-
 };
 
 const Complete = {
   UC_CODE: `${ITEM_ERROR_PREFIX}complete/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -95,7 +93,7 @@ const Complete = {
 
 const Delete = {
   UC_CODE: `${ITEM_ERROR_PREFIX}delete/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -115,7 +113,7 @@ const Delete = {
 
 const List = {
   UC_CODE: `${ITEM_ERROR_PREFIX}list/`,
-  
+
   InvalidDtoIn: class extends TodoMainUseCaseError {
     constructor() {
       super(...arguments);
@@ -131,5 +129,5 @@ module.exports = {
   Complete,
   Update,
   Get,
-  Create
+  Create,
 };

@@ -14,12 +14,12 @@ const Todo = createVisualComponent({
     todo: UU5.PropTypes.shape({
       name: UU5.PropTypes.string.isRequired,
       text: UU5.PropTypes.string.isRequired,
-      averageRating: UU5.PropTypes.number.isRequired
+      averageRating: UU5.PropTypes.number.isRequired,
     }),
     colorSchema: UU5.PropTypes.string,
     onDetail: UU5.PropTypes.func,
     onUpdate: UU5.PropTypes.func,
-    onDelete: UU5.PropTypes.func
+    onDelete: UU5.PropTypes.func,
   },
   //@@viewOff:propTypes
 
@@ -29,41 +29,41 @@ const Todo = createVisualComponent({
     colorSchema: "blue",
     onDetail: () => {},
     onUpdate: () => {},
-    onDelete: () => {}
+    onDelete: () => {},
   },
   //@@viewOff:defaultProps
 
   render({ todo, colorSchema, onDelete }) {
     //@@viewOn:private
     function handleDelete() {
-        onDelete(todo);
-      }
-      //@@viewOff:private
-  
-      //@@viewOn:render
-      function renderHeader() {
-        return (
-          <>
-            {todo.name}
-            <UU5.Bricks.Button onClick={handleDelete} colorSchema="red">
-              <UU5.Bricks.Icon icon="mdi-delete" />
-            </UU5.Bricks.Button>
-          </>
-        );
-      }
-  
-      if (!todo) {
-        return null;
-      }
-  
-      return (
-        <UU5.Bricks.Card header={renderHeader()} colorSchema={colorSchema}>
-          <div>{todo.text}</div>
-          <UU5.Bricks.Rating value={todo.averageRating} />
-        </UU5.Bricks.Card>
-      );
-      //@@viewOff:render
+      onDelete(todo);
     }
+    //@@viewOff:private
+
+    //@@viewOn:render
+    function renderHeader() {
+      return (
+        <>
+          {todo.name}
+          <UU5.Bricks.Button onClick={handleDelete} colorSchema="red">
+            <UU5.Bricks.Icon icon="mdi-delete" />
+          </UU5.Bricks.Button>
+        </>
+      );
+    }
+
+    if (!todo) {
+      return null;
+    }
+
+    return (
+      <UU5.Bricks.Card header={renderHeader()} colorSchema={colorSchema}>
+        <div>{todo.text}</div>
+        <UU5.Bricks.Rating value={todo.averageRating} />
+      </UU5.Bricks.Card>
+    );
+    //@@viewOff:render
+  },
 });
 
 export default Todo;

@@ -2,7 +2,6 @@
 const ItemAbl = require("../../abl/item-abl.js");
 
 class ItemController {
-
   list(ucEnv) {
     return ItemAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
@@ -26,7 +25,6 @@ class ItemController {
   create(ucEnv) {
     return ItemAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn());
   }
-
 }
 
 module.exports = new ItemController();
